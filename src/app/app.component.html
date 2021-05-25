@@ -1,45 +1,44 @@
-<div style="text-align:center">
-  <a routerLink="/productos">Productos</a> - 
-  <a routerLink="/acercade">Acerca de ...</a>
-  <div style="border: 1px solid red">
-    <router-outlet></router-outlet>
+<div class="container">
+  <h1>Administración de productos</h1>
+  <table *ngIf="hayRegistros(); else sinproductos" class="table">
+    <thead>
+      <tr>
+        <td>Codigo</td>
+        <td>Nombre</td>
+        <td>Precio</td>
+        <td>Imagen</td>
+        <td>Borrar</td>
+        <td>Seleccionar</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of lista">
+        <td>{{producto.id}}</td>
+        <td>{{producto.nombre}}</td>
+        <td>{{producto.precio}}</td>
+        <td><img [src]="'http://localhost:3000/'+producto.imagen" class="max-image"></td>
+        <td><button (click)="eliminar(producto.id)" class="btn btn-danger">Borrar?</button></td>
+        <td><button (click)="mostrar(producto.id)" class="btn btn-info text-white">Seleccionar</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #sinproductos>
+    <p>No hay productos</p>
+  </ng-template>
+  <hr>
+  <div>
+    <h1>Datos</h1>
+    <p>
+      Descripcion:<input type="text" [(ngModel)]="prod.nombre" class="form-control" />
+    </p>
+    <p>
+      Precio:<input type="number" [(ngModel)]="prod.precio" class="form-control"/>
+    </p>
+    <p>
+      Imagen. <input type="file" (change)="onFileSelected($event)">
+    </p>
+    <p><button class="btn btn-primary mx-2" (click)="nuevo()">Agregar</button>
+      <button class="btn btn-success mx-2" (click)="actualizar()">Modificar</button>
+    </p>
   </div>
-</div>
-<div>
-  <h1>Administración de artículos</h1>
-    <table border="1" *ngIf="hayRegistros(); else sinproductos">
-        <tr>
-          <td>Codigo</td>
-          <td>Nombre</td>
-          <td>Precio</td>
-          <td>Imagen</td>
-          <td>Borrar</td>
-          <td>Seleccionar</td>
-        </tr>
-
-        <tr *ngFor="let producto of lista">
-          <td>{{producto.id}}</td>
-          <td>{{producto.nombre}}</td>
-          <td>{{producto.precio}}</td>
-          <td><img [src]="'http://localhost:3000/'+producto.imagen" class="max-image"></td>
-          <td><button (click)="eliminar(producto.id)">Borrar?</button></td>
-          <td><button (click)="mostrar(producto.id)">Seleccionar</button></td>
-        </tr>
-    </table>
-    <ng-template #sinproductos><p>No hay productos</p></ng-template>
-    <hr>
-    <div>
-      <h1>Datos</h1>
-      <p>
-        Descripcion:<input type="text" [(ngModel)]="prod.nombre" />
-      </p>
-      <p>
-        Precio:<input type="number" [(ngModel)]="prod.precio" />
-      </p>
-      <p>
-        Imagen. <input type="file" (change)="onFileSelected($event)">
-      </p>         
-      <p><button class="btn btn-primary" (click)="nuevo()">Agregar</button>
-      <button class="btn btn-danger" (click)="actualizar()">Modificar</button></p>
-    </div>
 </div>
